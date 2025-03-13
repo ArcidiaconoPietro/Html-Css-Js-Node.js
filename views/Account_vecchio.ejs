@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<script>
+    // Funzione per aprire il menù
+    function openMenu() {
+        document.getElementById("myMenu").style.width = "20%";
+    }
+
+    // Funzione per chiudere il menù
+    function closeMenu() {
+        document.getElementById("myMenu").style.width = "0";
+    }
+
+</script>
+<style>
+    body,
+    html {
+        margin: 0;
+        height: 100%;
+        width: 100%;
+        font-family: Arial, sans-serif;
+        overflow-x: hidden;
+
+    }
+
+    header {
+        margin-top: 0.5%;
+        margin-left: 0.5%;
+        margin-right: 0.5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5%;
+        border-radius: 40px;
+        background: #194572;
+        position: relative;
+        z-index: 10;
+    }
+
+    /* Stile per il menù hamburger */
+    .hamburger {
+        font-size: 25px;
+        cursor: pointer;
+        display: inline-block;
+        margin-right: 3%;
+        margin-left: 1%;
+        color: white;
+    }
+
+    /* Stile per la barra laterale del menù */
+    .menu {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        border-radius: 30px;
+        margin-top: 0%;
+        margin-left: 0.3%;
+        background-color: #ffffffc9;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10.6px);
+        -webkit-backdrop-filter: blur(20.6px);
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+        z-index: 11;
+    }
+
+    .menu a {
+        padding: 10px 20px;
+        text-decoration: none;
+        font-size: 18px;
+        border-radius: 16px;
+        color: rgb(0, 0, 0);
+        display: block;
+        transition: 0.5s ease;
+    }
+
+    .menu a:hover {
+        background-color: #194672;
+        color: white;
+        border-radius: 16px;
+    }
+
+    .menu .close-btn {
+        position: absolute;
+        top: 0;
+        right: 0%;
+        font-size: 30px;
+        margin-left: 50px;
+    }
+
+    .logo {
+        position: absolute;
+        left: 4%;
+        /* Sposta il logo verso destra */
+        top: 50%;
+        transform: translateY(-50%);
+        /* Centra verticalmente */
+    }
+
+    .logo img {
+        width: auto;
+        /* Mantieni l'immagine alla sua dimensione naturale */
+        height: 50px;
+        /* Imposta un'altezza fissa per evitare che cresca troppo */
+    }
+
+
+    /* Stile per i pulsanti centrali */
+    .center-buttons {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 25px;
+    }
+
+    .center-buttons button {
+        background-color: #00000000;
+        color: #ffffff;
+        padding: 12px;
+        border: none;
+        font-size: 17px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    .center-buttons button:hover {
+        text-decoration: underline;
+        border-radius: 16px;
+    }
+
+    /* Stile per i pulsanti a destra */
+    .right-buttons {
+        display: flex;
+        gap: 15px;
+        margin-right: 0.5%;
+    }
+
+    .right-buttons button {
+        padding: 12px;
+        border: none;
+        border-radius: 25px;
+        box-sizing: border-box;
+        font-size: 16px;
+        background-color: rgb(255, 255, 255);
+        color: black;
+        cursor: pointer;
+        transition: background-color 0.4s, border-radius 0.4s;
+    }
+
+    .right-buttons button:hover {
+        background-color: #ffffff9c;
+        border-radius: 16px;
+    }
+
+    /* Stile per la tendina */
+    .tendina {
+        position: absolute;
+        /* Cambiato a absolute */
+        top: calc(80% + 100px);
+        /* Posiziona la tendina sotto l'immagine */
+        width: 100%;
+        height: 50%;
+        background-color: #ffffff55;
+        backdrop-filter: blur(10.6px);
+        -webkit-backdrop-filter: blur(10.6px);
+        box-shadow: 0 0px 50px #1945722f;
+        border-radius: 25px 25px 0 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: bottom 1s ease;
+        z-index: 1;
+        /* Assicurati che sia sopra altri elementi */
+    }
+
+    /* Stile per il contenuto della tendina */
+    .tendina-content {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18%;
+        padding: 20px;
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .tendina-content .item {
+        padding: 15px;
+        transition: transform 0.3s ease;
+    }
+
+    .tendina-content .item:hover {
+        transform: translateY(-5px);
+    }
+
+    .tendina-content .item img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+
+    .tendina-content .item h3 {
+        font-size: 18px;
+        margin: 10px 0;
+        color: #194572;
+    }
+
+    .tendina-content .item p {
+        font-size: 14px;
+        color: #333;
+    }
+
+
+    .header-right {
+        align-items: left;
+        display: flex;
+        margin-left: 25%;
+        margin-right: 0.5%;
+
+    }
+
+    .profile {
+
+        display: flex;
+        align-items: center;
+    }
+
+    .profile img {
+        border-radius: 50%;
+        margin-right: 3%;
+        width: 40px;
+        height: 40px;
+    }
+
+    .profile span {
+        font-size: 1em;
+        color: #ffffff;
+    }
+
+    .button-container {
+        display: flex;
+        gap: 10px;
+        /* distanza maggiore tra i pulsanti */
+    }
+
+    .btn {
+        padding: 12px;
+        border: none;
+        border-radius: 25px;
+        box-sizing: border-box;
+        font-size: 16px;
+        background-color: rgb(255, 255, 255);
+        color: black;
+        cursor: pointer;
+        transition: background-color 0.4s, border-radius 0.4s;
+        text-decoration: none;
+    }
+
+    .btn:hover {
+        background-color: #ffffff9c;
+        border-radius: 16px;
+    }
+
+    .Sezione1 {
+        margin-top: 1%;
+        background-color: #dbdce1;
+        height: 40%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        gap: 20%;
+    }
+
+    .Sezione2 {
+        margin-top: 5%;
+        height: auto;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .p-Sezione1 {
+        text-align: left;
+    }
+
+    .p1-Sezione2 {
+        text-align: center;
+    }
+
+    .p2-Sezione2 {
+        text-align: center;
+    }
+
+    .p3-Sezione2 {
+        text-align: center;
+    }
+
+    .p4-Sezione2 {
+        text-align: center;
+    }
+
+    .p5-Sezione2 {
+        text-align: center;
+    }
+
+    footer {
+        background-color: #194572;
+        color: white;
+        text-align: center;
+        padding: 20px 0;
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        top: 0%;
+    }
+
+    footer a {
+        color: white;
+        text-decoration: none;
+        margin: 10px 10px;
+    }
+
+    footer a:hover {
+        text-decoration: underline;
+    }
+
+    .footer-container p {
+        margin: 30px 0;
+    }
+
+    .footer-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .footer-container img {
+        width: 40px;
+        height: auto;
+    }
+
+    .footer-container i {
+        color: white;
+        font-size: 24px;
+    }
+
+    .footer-container p {
+        margin-left: 15px;
+        color: white;
+    }
+
+    .Richiesta {
+        background-color: #194572;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+
+    }
+
+    .Selettore_Ambito {
+        width: 100%;
+        height: 40%;
+        margin: 5%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        gap: 30%;
+    }
+
+    .Left-Ambito {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .Left-Ambito1 {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-direction: row;
+    }
+
+    .GIF {
+        height: 350px;
+        width: auto;
+    }
+
+    .selettore-button {
+        background-color: #ccc;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 25px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, border-radius 0.4s;
+    }
+
+
+    .selettore-button:hover {
+        border-radius: 16px;
+    }
+
+    .selettore-button.selected {
+        background-color: #194572;
+        color: white;
+    }
+
+    .arrow-button {
+        width: 45px;
+        height: 43px;
+        background-color: #888888;
+        border: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: not-allowed;
+        margin-left: 20%;
+    }
+
+    .arrow-button img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .arrow-button:disabled {
+        cursor: not-allowed;
+        background-color: #888888;
+        /* Grigio disabilitato */
+    }
+
+    .arrow-button:active {
+        cursor: pointer;
+
+    }
+
+    .Right-Ambito {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .GIF img {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
+
+<body>
+    <!-- Sidebar menù nascosto -->
+    <div id="myMenu" class="menu">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
+        <a href="/">Home</a>
+        <a href="/Account">Servizi</a>
+        <a href="/ControllerConsulenza">Contatti</a>
+        <a href="#">Su di noi</a>
+    </div>
+
+    <!-- Header con menù e pulsanti -->
+    <header>
+        <!-- Contenitore menù e logo -->
+
+        <!-- Menù hamburger con Font Awesome -->
+        <div class="hamburger" onclick="openMenu()">
+            <i class="fas fa-bars"></i> <!-- Icona Font Awesome -->
+        </div>
+
+        <!-- Immagine vicina al menù -->
+        <div class="logo">
+            <img src="images/bianca_titolo.png" alt="Logo">
+        </div>
+
+
+        <!-- Pulsanti centrali "Contattaci" e "Su di noi" -->
+        <div class="center-buttons">
+            <button>Contattaci</button>
+            <button>Su di noi</button>
+        </div>
+
+        <!-- Pulsanti "Accedi" e "Registrati" a destra -->
+        <div class="header-right">
+            <div class="profile button-container">
+                <% if (user) { %>
+                    <img src="/images/profile.png" alt="Profile Picture">
+                    <span class="Nome_Profilo">
+                        <%= user.nome %>
+                    </span>
+                    <% } else { %>
+                        <img src="/images/omino-grigio.jpg" alt="Profile Picture">
+                        <a href="/RegisterController" class="btn">Registrati</a>
+                        <% } %>
+            </div>
+        </div>
+    </header>
+
+    <div class="Sezione1">
+        <div class="p-Sezione1">
+
+            <h1>Come funziona ARTAVI?</h1>
+            <p>Ricevere preventivi gratis è semplice e veloce. Descrivi la tua richiesta e Instapro ti metterà in
+                contatto <br />
+                con diversi professionisti qualificati che ti invieranno i loro preventivi. Potrai confrontare e
+                scegliere quelli<br />
+                che soddisfano al meglio i tuoi bisogni. È facile, gratis e senza obblighi.</p>
+
+        </div>
+        <div class="Img-Sezione1">
+            <img src="/images/1.png" alt="img 1">
+        </div>
+    </div>
+
+
+
+    <div class="Sezione2">
+        <div class="img1-Sezione2">
+            <img src="/images/2.png" alt="img 1">
+        </div>
+        <div class="p1-Sezione2">
+            <h1>Invia la tua richiesta</h1>
+            <p>Ricevere preventivi gratis è semplice e veloce. Descrivi la tua richiesta e Instapro ti metterà in
+                contatto <br />
+                con diversi professionisti qualificati che ti invieranno i loro preventivi. Potrai confrontare e
+                scegliere quelli<br />
+                che soddisfano al meglio i tuoi bisogni. È facile, gratis e senza
+                obblighi.<br /><br /><br /><br /><br /></p>
+        </div>
+        <div class="img2-Sezione2">
+            <img src="/images/3.png" alt="img 1">
+
+        </div>
+        <div class="p2-Sezione2">
+            <h1>Inizia a ricevere proposte</h1>
+            <p>Dopo aver inviato la tua richiesta, le informazioni verranno inoltrate ai professionisti <br />
+                qualificati nella tua zona. Entro breve comincerai a ricevere le loro proposte via<br />
+                email.<br /><br /><br /><br /><br /></p>
+        </div>
+        <div class="img3-Sezione2">
+            <img src="/images/4.png" alt="img 1">
+
+        </div>
+        <div class="p3-Sezione2">
+            <h1>Scegli la proposta più adatta alle tue esigenze</h1>
+            <p>Se trovi un'impresa o un artigiano che soddisfa le tue esigenze, puoi contattarli via<br />
+                email o per telefono.<br /><br /><br /><br /><br /></p>
+        </div>
+        <div class="img4-Sezione2">
+            <img src="/images/5.png" alt="img 1">
+
+        </div>
+        <div class="p4-Sezione2">
+            <h1>Il lavoro viene eseguito</h1>
+            <p>Dopo aver preso accordi in merito ai dettagli, al prezzo e alla tempistica, gli artigiani<br />
+                prescelti eseguiranno e completeranno il lavoro per il tuo progetto.<br /><br /><br /><br /><br /></p>
+        </div>
+        <div class="img5-Sezione2">
+            <img src="/images/6.png" alt="img 1">
+
+        </div>
+        <div class="p5-Sezione2">
+            <h1>Valuta e descrivi la tua esperienza</h1>
+            <p>Una volta completato il lavoro, potrai valutare la tua esperienza con il professionista<br />
+                prescelto. Le valutazioni fornite aiuteranno gli altri clienti a scegliere i professionisti<br />
+                per i loro progetti.<br /><br /><br /><br /><br /></p>
+        </div>
+
+
+    </div>
+    <div class="Richiesta">
+        <h1>Inizia a formulare la richiesta</h1>
+    </div>
+
+    <div class="Selettore_Ambito">
+        <!-- Sezione sinistra con pulsanti di selezione -->
+        <div class="Left-Ambito">
+            <h1>Seleziona l'ambito della tua richiesta</h1>
+            <button class="selettore-button" onclick="selectAmbito(this)">CASA</button>
+            <br>
+            <button class="selettore-button" onclick="selectAmbito(this)">LAVORO</button>
+            <br>
+            <button class="selettore-button" onclick="selectAmbito(this)">PRIVATO</button>
+
+            <!-- Bottone per andare avanti -->
+            <div style="margin-top: 20px;">
+                <button class="arrow-button" id="arrow-button" disabled>
+                    <img src="/images/Image.png" alt="arrow">
+                </button>
+            </div>
+      
+        </div>
+
+
+      
+        <!-- Sezione destra con GIF -->
+        <div class="Right-Ambito GIF">
+            <img src="/images/GIF.gif" alt="GIF">
+        </div>
+    </div>
+
+    </div>
+    <footer>
+        <div class="footer-container" style="display: flex; justify-content: center; align-items: center; gap: 15px;">
+            <!-- Logo piccolino -->
+            <img src="images/logo_bianco.png" alt="Logo" style="width: 30px; height: auto;">
+
+            <!-- Icone social -->
+            <a href="#" target="_blank"><i class="fab fa-facebook" style="color: white; font-size: 24px;"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-instagram" style="color: white; font-size: 24px;"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-whatsapp" style="color: white; font-size: 24px;"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-linkedin" style="color: white; font-size: 24px;"></i></a>
+
+            <!-- Copyright -->
+            <p style="margin-left: 15px;">&copy; 2024 Artavi Consulting. Tutti i diritti riservati.</p>
+        </div>
+        <div class="footer-container">
+            <p>Telefono: 379-111-3763</p>
+            <p> Mail:<a href="mailto:artavi.team@gmail.com">artavi.team@gmail.com</a></p>
+
+            <p><a href="#">Privacy Policy</a> | <a href="#">Termini e condizioni</a></p>
+        </div>
+    </footer>
+</body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Nasconde il secondo ambito all'inizio
+        document.getElementById('Left-Ambito1').style.display = 'none';
+
+        // Aggiungi l'evento al pulsante solo dopo che il DOM è stato caricato
+        document.getElementById("selettore_button").addEventListener("click", function () {
+            Selection++;
+            console.log("Selection:", Selection);
+            CambioAmbito(Selection);
+        });
+    });
+
+    let selectedButton = null;
+    let Selection = 0;
+
+    function CambioAmbito(selection) {
+        if (selection === 1) {
+            // Nasconde il primo ambito e mostra il secondo
+            document.getElementById('Left-Ambito').style.display = 'none';
+            document.getElementById('Left-Ambito1').style.display = 'block';
+        } else {
+            // Mostra di nuovo il primo ambito (opzionale)
+            document.getElementById('Left-Ambito').style.display = 'block';
+            document.getElementById('Left-Ambito1').style.display = 'none';
+        }
+    }
+
+    // Funzione per selezionare un ambito
+    function selectAmbito(button) {
+        const buttons = document.querySelectorAll('.selettore-button');
+        buttons.forEach(btn => btn.classList.remove('selected'));
+
+        // Seleziona il pulsante cliccato
+        button.classList.add('selected');
+        selectedButton = button;
+
+        // Attiva il bottone avanti
+        document.getElementById('arrow-button').disabled = false;
+        document.getElementById('arrow-button').style.backgroundColor = '#194572'; // Colore blu attivo
+        document.getElementById('arrow-button').style.cursor = "pointer";
+    }
+</script>
+
+</html>

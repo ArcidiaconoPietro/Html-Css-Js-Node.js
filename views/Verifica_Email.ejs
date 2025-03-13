@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifica Email - Artavi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .Container_Principale {
+            max-width: 400px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 25px;
+            margin: 5%;
+        }
+        h1 {
+            text-align: center;
+            color: rgb(0, 0, 0);
+            margin-bottom: 20px;
+            font-size: 26px;
+            margin-bottom: 8%;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #000000; /* Colore più tenue per le etichette */
+            margin-left:4%;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 25px;
+            box-sizing: border-box;
+            font-size: 16px;
+            background-color: white;
+            color: black;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            background-color: lightgray;
+        }
+        input[type="submit"] {
+            background-color: #194672;
+            color: white;
+            padding: 16px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 20px;
+            transition: 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #194572bb;
+            border-radius: 16px;
+        }
+        .resend-link {
+            text-align: center;
+            margin-top: 20px;
+            color: rgb(0, 0, 0);
+        }
+        .resend-link a {
+            color: #194672;
+            text-decoration: none;
+        }
+        .resend-link a:hover {
+            text-decoration: underline;
+        }
+        .error-message {
+            display: none;
+            background-color: #cf6679;
+            color: white;
+            padding: 10px;
+            border-radius: 25px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        /* Stile per il video di sfondo */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1; /* Posiziona il video dietro al contenuto */
+        }
+
+        .video-background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            background-size: cover;
+        }
+
+        /* Assicurati che il contenuto sia visibile sopra il video */
+        header, section, .squares-section, .Div_Centrale {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Opzionale: Aggiungi un overlay scuro per migliorare la leggibilità del testo */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Modifica l'opacità come necessario */
+            z-index: 0;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Gestione dell'invio del form di verifica
+            $('form#verificationForm').submit(function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                var formData = $(this).serialize(); // Serialize form data
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/verify_code',
+                    data: formData,
+                    success: function(response) {
+                        // If verification is successful, redirect to login page
+                        window.location.href = '/login'; // Redirect to login page
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors from server
+                        if (xhr.status === 400) {
+                            $('.error-message').text(xhr.responseText); // Show server error message
+                        } else {
+                            $('.error-message').text("Errore durante la verifica."); // Generic error message
+                        }
+                        $('.error-message').show(); // Show error message element
+                    }
+                });
+            });
+
+            // Gestione dell'invio della richiesta di invio codice di verifica nuovamente
+            $('.resend-link a').click(function(event) {
+                event.preventDefault(); // Prevent default link behavior
+
+                var email = $('#verificationEmail').val(); // Get email from input
+
+                // Invia richiesta di invio email di verifica
+                $.ajax({
+                    type: 'POST',
+                    url: '/resend_verification',
+                    data: { email: email },
+                    success: function(response) {
+                        alert('Email di verifica reinviata con successo!');
+                        // Potresti aggiungere qui altre azioni, come confermare all'utente che l'email è stata inviata
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Errore durante l\'invio dell\'email di verifica. Riprova più tardi.');
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="video-background">
+        <video autoplay muted loop playsinline>
+            <source src="images/sfondo.mp4" type="video/mp4">
+            Il tuo browser non supporta i video HTML5.
+        </video>
+    </div>
+    <div class="Container_Principale">
+        <h1>Verifica Email</h1>
+        <form id="verificationForm" action="/verify_code" method="post">
+            <div>
+                <label for="verificationCode">Codice di verifica:</label>
+                <input type="text" id="verificationCode" name="verificationCode" required>
+            </div>
+            <div>
+                <input type="submit" value="Invia">
+            </div>
+        </form>
+        <div class="error-message"></div> 
+        <div class="resend-link">
+            <p>Email non ricevuta? <a href="#" id="resendVerification">Invia di nuovo</a></p>
+        </div>
+    </div>
+</body>
+</html>

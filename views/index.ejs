@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artavi</title>
+
+    <!-- Link a Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const button = document.getElementById("IDButton_Scopri_Di_Piu");
+
+            if (button) {
+                button.addEventListener('click', function() {
+                    console.log("entrato");
+                    
+                    const target = document.getElementById('Container-3');
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                        console.error("Div 'Container-3' non trovato!");
+                    }
+                });
+            } else {
+                console.error("Bottone 'IDButton_Scopri_Di_Piu' non trovato!");
+            }
+        });
+</script>
+    <style>
+        /* Stile base per il corpo */
+        body,
+        html {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+
+        header {
+            margin-top: 0.3%;
+            margin-left: 0.3%;
+            margin-right: 0.3%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5%;
+            border-radius: 40px;
+            background: #194572;
+            position: relative;
+            z-index: 10;
+        }
+        /* Stile per il video di sfondo */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -3;
+        }
+
+        /* Stile per il contenitore dell'immagine */
+        .image-container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: right;
+            align-items: right;
+            left: 60%;
+            margin-top: 5%;
+            height: 100%;
+            width: 27%;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Stile per il contenitore del rettangolo smussato */
+        .rectangle-container {
+            position: absolute;
+            top: 14%;
+            
+            left: 8%;
+            width: 50%;
+            height: auto;
+            padding: 5% 0 0 5%;
+            z-index: 1;
+        }
+
+        .rectangle-container h3,
+        .rectangle-container p {
+            text-align: left;
+            margin: 0;
+        }
+
+        .rectangle-container h3 {
+            margin-top: 5%;
+            width: 70%;
+        }
+
+        .rectangle-container p {
+            font-family: 'Futura', sans-serif;
+            padding-left: 0%;
+            padding-right: 3%;
+            padding-bottom: 0%;
+            line-height: 100%;
+            font-size: 78px;
+            font-style: none;
+            font-weight: 1200;
+            color: #000000;
+            
+        }
+
+        /* Pulsanti nel rettangolo */
+        .rectangle-buttons {
+            margin-top: 7%;
+            display: flex;
+            justify-content: left;
+            gap: 20px;
+            position: relative;
+            bottom: 20px;
+            width: 100%;
+        }
+
+        
+        .rectangle-buttons a:first-child {
+            padding: 16px;
+            border-radius: 30px;
+            font-size: 16px;
+            border: solid 2px #194572;
+            background-color: #194572;
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s ease;
+            text-align: center;
+            display: inline-block;
+            width: 15%;
+        }
+
+        
+
+        .rectangle-buttons a:hover:first-child {
+            background-color: #194572bb;
+            border-radius: 16px;
+            border: solid 2px #ffffff00;
+        }
+
+     
+
+        /* Stile per il menù hamburger */
+        .hamburger {
+            font-size: 25px;
+            cursor: pointer;
+            display: inline-block;
+            margin-right: 3%;
+            margin-left: 1%;
+            color: white;
+        }
+
+        /* Stile per la barra laterale del menù */
+        .menu {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            border-radius: 28px;
+            margin-top: 0%;
+            margin-left: 0.3%;
+            background-color: #ffffffc9;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10.6px);
+            -webkit-backdrop-filter: blur(20.6px);
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 11;
+        }
+
+        .menu a {
+            padding: 3px 20px;
+            text-decoration: none;
+            font-size: 20px;
+            border-radius: 16px;
+            margin-top: 4%;
+            color: rgb(0, 0, 0);
+            display: block;
+            transition: 0.3s ease;
+        }
+
+        .menu a:hover {
+            padding: 10px 20px;
+            
+            background-color: #194572e1;
+            color: rgb(255, 255, 255);
+            border-radius: 25px;
+        }
+
+        .menu .close-btn {
+            position: absolute;
+            top: 0;
+            right: 0%;
+            font-size: 30px;
+            margin-left: 50px;
+        }
+
+        .logo {
+            position: absolute;
+            left: 4%; /* Sposta il logo verso destra */
+            top: 50%;
+            transform: translateY(-50%); /* Centra verticalmente */
+        }
+        .logo img {
+            width: auto; /* Mantieni l'immagine alla sua dimensione naturale */
+            height: 50px; /* Imposta un'altezza fissa per evitare che cresca troppo */
+        }
+
+
+        /* Stile per i pulsanti centrali */
+        .center-buttons {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 25px;
+        }
+
+        .center-buttons button {
+            background-color: #00000000;
+            color: #ffffff;
+            padding: 12px;
+            border: none;
+            font-size: 17px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .center-buttons button:hover {
+            text-decoration: underline;
+            border-radius: 16px;
+        }
+
+        /* Stile per i pulsanti a destra */
+        .right-buttons {
+            display: flex;
+            gap: 15px;
+            margin-right: 0.5%;
+        }
+
+        .right-buttons button {
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            box-sizing: border-box;
+            font-size: 16px;
+            background-color: rgb(255, 255, 255);
+            color: black;
+            cursor: pointer;
+            transition: background-color 0.4s, border-radius 0.4s;
+        }
+
+        .right-buttons button:hover {
+            background-color: #ffffff9c;
+            border-radius: 16px;
+        }
+
+        /* Stile per la tendina */
+        .tendina {
+            position: absolute;
+            /* Cambiato a absolute */
+            top: calc(80% + 100px);
+            /* Posiziona la tendina sotto l'immagine */
+            width: 100%;
+            height: 60%;
+            background-color: #ffffff24;
+            backdrop-filter: blur(10.6px);
+            -webkit-backdrop-filter: blur(10.6px);
+            box-shadow: 0 0px 50px #1945722f;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: bottom 1s ease;
+            z-index: 1;
+            /* Assicurati che sia sopra altri elementi */
+        }
+        
+        /* Stile per il contenuto della tendina */
+        .tendina-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16%;
+            padding: 20px;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .tendina-content .item {
+            padding: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .tendina-content .item:hover {
+            transform: translateY(-5px);
+        }
+
+        .tendina-content .item img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .tendina-content .item h3 {
+            font-size: 22px;
+            margin: 10px 0;
+            color: #194572;
+        }
+
+        .tendina-content .item p {
+            font-size: 14px;
+            color: #000000;
+        }
+
+        .section-with-video {
+            position: absolute;
+            display: flex;
+            height: 80%;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6%;
+            background-color: #194672;
+            top: 100%; /* Distanza dalla tendina */
+            z-index: 2;
+        }
+
+        .section-content {
+            display: flex;
+            width: 100%;
+        }
+
+        .text-content {
+            flex: 1; /* Prende tutto lo spazio disponibile a sinistra */
+            margin-right: 20px; /* Distanza tra il testo e il video */
+        }
+
+        .text-content h2 {
+            font-size: 36px;
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+
+        .text-content p {
+            font-size: 18px;
+            line-height: 1.5;
+            color: #ffffff;
+        }
+
+/* Styles for the reviews section */
+.slideshow-container {
+            position: relative;
+            max-width: 40%;
+            margin: auto;
+        }
+
+        .slides {
+            display: none;
+            width: 100%;
+            height: auto;
+        }
+
+        .active-slide {
+            display: block;
+        }
+
+        .prev,
+        .next {
+            cursor: pointer;
+            position: absolute;
+            top: 0%;
+            width: auto;
+            padding: 16px;
+            color: #194672;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.3s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+
+        .next {
+            right: 0;
+        }
+
+        .prev:hover,
+        .next:hover {
+            color: rgba(0, 0, 0, 0.538);
+            border-radius: 25px;
+        }
+
+        .container-3 {
+            position: absolute;
+            display: flex;
+            height: 80%;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20% 0 20%;
+            background-color: #ffffff4a;
+            top: 220%; /* Distanza dalla tendina */
+            z-index: 0;
+            transition: 0.4s linear;
+        }
+
+        .container-3:hover {
+            background-color: #ffffff94;
+        }
+
+        .spiegazione-container {
+            width: 100%;
+            padding-right: 50px;
+        }
+
+        .spiegazione-container h1 {
+            font-size: 36px;
+            margin-bottom: 0px;
+        }
+
+        .spiegazione-container p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #000000;
+        }
+
+        .immagine-container {
+            width: 20%;
+        }
+
+        .immagine-container img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container-4 {
+            position: absolute;
+            max-width: 600px;
+            width: 100%;
+            align-items: center;
+            padding: 0 20% 0 20%;
+            top: 300%; /* Distanza dalla tendina */
+            z-index: 2;
+        }
+
+
+        
+
+        .immagine-servizio-container img {
+            max-width: 15%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            margin-top: 8%;
+        }
+
+        .servizio-container {
+            text-align: center;
+            margin-bottom: 8%;
+        }
+
+        .servizio-container h1 {
+            font-size: 26px;
+            margin-bottom: 15px;
+        }
+
+        .servizio-container p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #333;
+        }
+
+
+        footer {
+            background-color: #194572;
+            /* Colore uguale all'header */
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+            z-index: 2;
+            top: 2400px;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 10px 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-container p {
+            margin: 30px 0;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .footer-container img {
+            width: 40px;
+            height: auto;
+        }
+
+        .footer-container i {
+            color: white;
+            font-size: 24px;
+        }
+
+        .footer-container p {
+            margin-left: 15px;
+            color: white;
+        }
+
+        .header-right {
+            align-items: left;
+            display: flex;
+            margin-left: 25%;
+            margin-right: 0.5%;
+
+        }
+
+        .profile {
+
+            display: flex;
+            align-items: center;
+        }
+
+        .profile img {
+            border-radius: 50%;
+            margin-right: 3%;
+            width: 40px;
+            height: 40px;
+        }
+
+        .profile span {
+            font-size: 1em;
+            color: #ffffff;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+            /* distanza maggiore tra i pulsanti */
+        }
+        .btn {
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            box-sizing: border-box;
+            font-size: 16px;
+            background-color: rgb(255, 255, 255);
+            color: black;
+            cursor: pointer;
+            transition: background-color 0.4s, border-radius 0.4s;
+            text-decoration: none;
+    }
+
+    .btn:hover {
+        background-color: #ffffff9c;
+        border-radius: 16px;
+    }
+    .Button_Scopri_Di_Piu{
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            background-color: #ffffff1f;
+            border: solid 2px;
+            color: #194572;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s ease;
+            text-align: center;
+            display: inline-block;
+            width: 15%;
+    }
+    .Button_Scopri_Di_Piu:hover {
+            background-color: #ffffff10;
+            border-radius: 16px;
+        }
+       .Button_Scopri_Di_Piu:active {
+        background-color: #ffffffb6;
+
+       }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Video di sfondo -->
+    <video autoplay muted loop class="video-background">
+        <source src="images/sfondo.mp4" type="video/mp4">
+        Il tuo browser non supporta il tag video.
+    </video>
+
+    <!-- Sidebar menù nascosto -->
+    <div id="myMenu" class="menu">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
+        <a href="#">Accedi</a>
+        <a href="#">Registrati</a>
+        <a href="#">Consulenza</a>
+        <a href="#">Profilo</a>
+        <a href="#">About us</a>
+        <a href="#">Contatti</a>
+    </div>
+
+    <!-- Header con menù e pulsanti -->
+    <header>
+        <!-- Contenitore menù e logo -->
+
+            <!-- Menù hamburger con Font Awesome -->
+            <div class="hamburger" onclick="openMenu()">
+                <i class="fas fa-bars"></i> <!-- Icona Font Awesome -->
+            </div>
+
+            <!-- Immagine vicina al menù -->
+            <div class="logo">
+                <img src="images/bianca_titolo_1.png" alt="Logo">
+            </div>
+
+
+        <!-- Pulsanti centrali "Contattaci" e "Su di noi" -->
+        <div class="center-buttons">
+            <button>Contattaci</button>
+            <button>Su di noi</button>
+        </div>
+
+        <!-- Pulsanti "Accedi" e "Registrati" a destra -->
+        <div class="header-right">
+            <div class="profile button-container">
+                
+                    <img src="/images/profile.png" alt="Profile Picture">
+                    <span class="Nome_Profilo">
+                    
+                    </span>
+                   
+                        <img src="/images/omino-grigio.jpg" alt="Profile Picture">
+                        <a href="/Login" class="btn">Registrati</a>
+                       
+            </div>
+        </div>
+    </header>
+
+    <!-- Rettangolo smussato con titolo, testo e pulsanti -->
+    <div class="rectangle-container">
+        
+        <p>
+        Chiedi.
+        </p>
+        <p>
+          Affida.
+        </p>
+        <p>
+          Goditi il risultato.
+        </p>
+        
+        <h3>benvuto nella sezione di consulenza di artavi
+            Offriamo consulenza su misura per ogni cliente, 
+            utilizzando tecniche innovative e un approccio
+        </h3>
+
+        <div class="rectangle-buttons">
+            <a href="#servizi">Vai al Servizio</a>
+            <button class="Button_Scopri_Di_Piu" id="IDButton_Scopri_Di_Piu">Scopri di più</button>
+        </div>
+    </div>
+
+    <!-- Container immagine -->
+    <div class="image-container">
+        <img src="images/index_prova_1.png" alt="Immagine">
+    </div>
+
+    <div>
+    <!-- Tendina nascosta che appare con lo scroll -->
+    <div class="tendina">
+        <div class="tendina-content">
+            <div class="item">
+                <img src="tendina/smart.png" alt="Immagine 1">
+                <h3>Le migliori soluzioni</h3>
+                <p>Breve descrizione per l'immagine 1.</p>
+            </div>
+            <div class="item">
+                <img src="tendina/hand.png" alt="Immagine 2">
+                <h3>Servizio Mirato</h3>
+                <p>Breve descrizione per l'immagine 2.</p>
+            </div>
+            <div class="item">
+                <img src="tendina/contact.png" alt="Immagine 3">
+                <h3>Contatto costante</h3>
+                <p>Breve descrizione per l'immagine 3.</p>
+            </div>
+            <div class="item">
+                <img src="tendina/satisfaction.png" alt="Immagine 4">
+                <h3>Esperti qualificati</h3>
+                <p>Breve descrizione per l'immagine 4.</p>
+            </div>
+        </div>
+
+    <div class="section-with-video">
+        <div class="section-content">
+            <!-- Colonna del testo a sinistra -->
+            <div class="text-content">
+                <h2>Cosa pensano i nostri clienti</h2>
+                <p>
+                    Offriamo consulenza su misura per ogni cliente, utilizzando tecniche innovative e un approccio
+                    collaborativo. Il nostro obiettivo è assicurare che ogni cliente riceva le soluzioni più adatte alle
+                    proprie esigenze, garantendo un supporto continuo durante tutto il processo.
+                </p>
+            </div>
+            
+            <div class="slideshow-container">
+                <!-- Slides -->
+                <img class="slides active-slide" src="recensioni/rec_1.JPG" alt="Slide 1">
+                <img class="slides" src="recensioni/rec_2.jpg" alt="Slide 2">
+                <img class="slides" src="recensioni/rec_3.jpg" alt="Slide 3">
+                <img class="slides" src="recensioni/rec_4.jpg" alt="Slide 4">
+                <img class="slides" src="recensioni/rec_5.jpg" alt="Slide 5">
+        
+                <!-- Next and previous buttons -->
+                <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+                <a class="next" onclick="changeSlide(1)">&#10095;</a>
+            </div>
+
+        </div>
+        
+    </div>
+
+    <div class="container-3" id="Container-3">
+        <div class="spiegazione-container">
+            <h1>Come funziona Artavi?</h1>
+            <p>
+                Questo è un esempio di testo di spiegazione. Puoi inserire il contenuto che desideri
+                in questa sezione. Il testo sarà posizionato sulla sinistra rispetto all'immagine.
+            </p>
+        </div>
+        <div class="immagine-container">
+            <img src="tendina/satisfaction.png" alt="Immagine di esempio">
+        </div>
+    </div>
+
+    <div class="container-4">
+        <div class="immagine-servizio-container">
+            <img src="tendina/hand.png" alt="Immagine di esempio">
+        </div>
+        <div class="servizio-container">
+            <h1>Invia la tua richiesta</h1>
+            <p>
+                Questo è un esempio di descrizione del servizio. In questa versione, l'immagine è posizionata sopra il testo.
+                Puoi inserire il contenuto che desideri.
+            </p>
+        </div>
+        
+        <div class="immagine-servizio-container">
+            <img src="tendina/hand.png" alt="Immagine di esempio">
+        </div>
+        <div class="servizio-container">
+            <h1>Inizia a ricevere proposte</h1>
+            <p>
+                Questo è un esempio di descrizione del servizio. In questa versione, l'immagine è posizionata sopra il testo.
+                Puoi inserire il contenuto che desideri.
+            </p>
+        </div>
+
+        <div class="immagine-servizio-container">
+            <img src="tendina/hand.png" alt="Immagine di esempio">
+        </div>
+        <div class="servizio-container">
+            <h1>Scegli la proposta più adatta alle tue esigenze</h1>
+            <p>
+                Questo è un esempio di descrizione del servizio. In questa versione, l'immagine è posizionata sopra il testo.
+                Puoi inserire il contenuto che desideri.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+    <footer>
+        <div class="footer-container" style="display: flex; justify-content: center; align-items: center; gap: 15px;">
+            <!-- Logo piccolino -->
+            <img src="images/logo_bianco.png" alt="Logo" style="width: 30px; height: auto;">
+
+            <!-- Icone social -->
+            <a href="#" target="_blank"><i class="fab fa-facebook" style="color: white; font-size: 24px;"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-instagram" style="color: white; font-size: 24px;"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-whatsapp" style="color: white; font-size: 24px;"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-linkedin" style="color: white; font-size: 24px;"></i></a>
+
+            <!-- Copyright -->
+            <p style="margin-left: 15px;">&copy; 2024 Artavi Consulting. Tutti i diritti riservati.</p>
+        </div>
+        <div class="footer-container">
+            <p>Telefono: 379-111-3763</p>
+            <p> Mail:<a href="mailto:artavi.team@gmail.com">artavi.team@gmail.com</a></p>
+
+            <p><a href="#">Privacy Policy</a> | <a href="#">Termini e condizioni</a></p>
+        </div>
+    </footer>
+
+
+    <script>
+
+let slideIndex = 1;
+        showSlide(slideIndex);
+
+        function changeSlide(n) {
+            showSlide(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlide(slideIndex = n);
+        }
+
+        function showSlide(n) {
+            let slides = document.getElementsByClassName("slides");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {
+                slideIndex = 1
+            }
+            if (n < 1) {
+                slideIndex = slides.length
+            }
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+        }
+
+
+        // Sensibilità del movimento della tendina
+
+        // Aggiungi un event listener per la rotella del mouse
+        window.addEventListener('wheel', handleScroll);
+
+        // Funzione per aprire il menù
+        function openMenu() {
+            document.getElementById("myMenu").style.width = "20%";
+        }
+
+        // Funzione per chiudere il menù
+        function closeMenu() {
+            document.getElementById("myMenu").style.width = "0";
+        }
+       
+    
+    </script>
+
+</body>
+
+</html>

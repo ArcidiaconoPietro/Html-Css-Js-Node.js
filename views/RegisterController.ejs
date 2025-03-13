@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrazione</title>
+</head>
+<body>
+    <div id="registration-container">
+        <!-- Qui verrà caricato il contenuto mobile o desktop -->
+    </div>
+
+    <script>
+function loadRegistrationPage() {
+    const width = window.innerWidth;
+    const page = width <= 768 ? 'RegisterMobile' : 'RegisterDesktop';
+
+    // Carica la versione corretta della pagina
+    fetch(`/${page}`)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('registration-container').innerHTML = html;
+
+            // Aggiungi il listener per il form solo dopo aver caricato il contenuto dinamico
+            setupFormHandler();
+        })
+        .catch(error => {
+            console.error('Errore durante il caricamento della pagina:', error);
+        });
+}
+
+// Funzione che si occupa di gestire il submit del form
+function setupFormHandler() {
+    const form = document.getElementById('registerForm');
+    if (!form) return;  // Se non c'è nessun form caricato, interrompi.
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Previene l'invio del form e il ricaricamento della pagina
+
+        const formData = new URLSearchParams(new FormData(form));  // Cambia da FormData a URLSearchParams
+
+        // Invia i dati del form al server
+        fetch('/register', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',  // Specifica il tipo di contenuto
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                // Mostra l'errore nella pagina
+                const errorBanner = document.getElementById('errorBanner');
+                const errorMessage = document.getElementById('errorMessage');
+                errorBanner.style.display = 'block';
+                errorMessage.textContent = data.error;
+            } else {
+                // Se la registrazione è riuscita, redirigi alla pagina di congratulazioni
+                window.location.href = '/Verifica_Email';
+            }
+        })
+        .catch(error => {
+            console.error('Errore durante la registrazione:', error);
+        });
+    });
+}
+
+// Carica la pagina corretta all'avvio
+loadRegistrationPage();
+
+// Ricarica la pagina quando la finestra viene ridimensionata
+
+    </script>
+</body>
+</html>

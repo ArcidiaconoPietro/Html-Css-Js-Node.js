@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrati - Artavi</title>
+</head>
+<style>
+body, html {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    display: flex;
+    align-items: center;
+}
+
+
+.video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1; /* Posiziona il video dietro al contenuto */
+        }
+
+        .video-background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            background-size: cover;
+        }
+
+.Container_Principale {
+    height: auto;
+    width: 80%; /* Larghezza leggermente aumentata */
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    z-index: 1;
+
+}
+
+
+h1 {
+    text-align: center;
+    color: #000000; /* Colore scuro per una migliore leggibilità */
+    margin-bottom: 40px;
+    font-size: 26px; /* Dimensione del font aumentata */
+}
+
+form {
+    width: 100%; /* Assicura che il form occupi tutta la larghezza */
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #000000; /* Colore più tenue per le etichette */
+    margin-left:4%;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: none; 
+    border-radius: 25px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: rgb(255, 255, 255);
+    color: black;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+    outline: none;
+    
+    background-color: lightgray; /* Colore di sfondo chiaro quando è attivo */
+}
+
+input[type="submit"] {
+    background-color: #194672; /* Colore del pulsante */
+    color: white; /* Colore del testo */
+    padding: 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    width: 100%; /* Pulsante a larghezza piena */
+    transition: 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #194572bb; /* Colore scuro al passaggio del mouse */
+    border-radius: 16px;
+}
+
+p {
+            text-align: center;
+            margin-top: 5%;
+            color: rgb(78, 78, 78);
+        }
+p a {
+            color: #194672;
+            text-decoration: none;
+        }
+        p a:hover {
+            text-decoration: underline;
+        }
+
+.error-message {
+    color: red; /* Colore rosso per i messaggi di errore */
+    margin: 10px 0;
+}
+
+.whatsapp-button-container {
+    text-align: center; /* Centra il testo */
+}
+
+.whatsapp-button-container a {
+    color: #1e8f48; /* Colore del link */
+    text-decoration: underline; /* Rimuove la sottolineatura */
+}
+.error-banner {
+            background-color: #cf6679;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 25px;
+            margin-top: 20px;
+            
+            display: none; /* Nascosto inizialmente */
+        }
+
+</style>
+<script>
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Previene l'invio del form e il ricaricamento della pagina
+
+    const form = event.target;
+    const formData = new FormData(form);
+    console.log(formData)
+    // Invia i dati del form al server tramite fetch
+    fetch('/register', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => {
+        // Se la risposta non è OK (status diverso da 200-299), lancia un errore
+        if (!response.ok) {
+            return response.json().then(data => {
+                throw new Error(data.error || 'Errore del server.');
+            });
+        }
+        return response.json(); // Altrimenti, continua con il JSON della risposta
+    })
+    .then(data => {
+        // Se la registrazione è riuscita, redirigi alla pagina di congratulazioni
+        window.location.href = '/Verifica_Email';
+    })
+    .catch(error => {
+        // Mostra l'errore nella pagina
+        const errorBanner = document.getElementById('errorBanner');
+        const errorMessage = document.getElementById('errorMessage');
+        errorBanner.style.display = 'block'; // Mostra il banner di errore
+        errorMessage.textContent = error.message; // Visualizza il messaggio di errore
+    });
+});
+
+
+function validateEmail() {
+    const emailField = document.getElementById('Email');
+    const errorMessage = document.getElementById('errorMessage');
+    const errorBanner = document.getElementById('errorBanner');
+
+    const email = emailField.value;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+        errorBanner.style.display = 'block';
+        errorMessage.textContent = 'Formato email non valido.';
+        emailField.style.borderColor = 'red';
+    } else {
+        errorBanner.style.display = 'none';
+        emailField.style.borderColor = 'initial';
+    }
+}
+
+    
+
+</script>
+<body>
+    <div class="video-background">
+        <video autoplay muted loop playsinline>
+            <source src="images/sfondo.mp4" type="video/mp4">
+            Il tuo browser non supporta i video HTML5.
+        </video>
+    </div>
+    <div class="Container_Principale">
+        <h1>Benvenuto su Artavi!</h1>
+        <form id="registerForm" action="/register" method="POST">
+            <div>
+                <label for="Nome">Nome:</label>
+                <input type="text" id="Nome" name="Nome" required>
+            </div>
+            <div>
+                <label for="Email">Email:</label>
+                <input type="email" id="Email" name="Email" required oninput="validateEmail()">
+            </div>
+            <div>
+                <label for="Password">Password:</label>
+                <input type="password" id="Password" name="Password" required>
+            </div>
+            <div>
+                <input type="submit" value="Registrati">
+            </div>
+        </form>
+
+        <div class="error-banner" id="errorBanner" style="display:none;">
+            <span id="errorMessage"></span>
+        </div>
+        
+            <p>Ti sei già registrato? <a href="/ControllerLogin">Accedi</a></p>
+
+        <div class="whatsapp-button-container">
+            <p>Hai bisogno di essere contattato urgentemente? Scrivici subito!</p>
+            <a href="https://wa.me/393791113763" target="_blank">Chatta su WhatsApp</a>
+        </div>
+        </div>
+    </div>
+</body>
+</html>

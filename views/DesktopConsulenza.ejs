@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script defer>
+       function toggleFileUpload() {
+    var fileUploadDiv = document.getElementById("file-upload");
+    var checkbox = document.getElementById("checkbox-allegato");
+
+    console.log("Checkbox checked:", checkbox.checked); // Log per vedere se la funzione viene chiamata
+
+    if (checkbox.checked) {
+        fileUploadDiv.style.display = "block"; // Mostra il div
+    } else {
+        fileUploadDiv.style.display = "none";  // Nascondi il div
+    }
+}
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var checkbox = document.getElementById("checkbox-allegato");
+            var fileInput = document.getElementById('input-Allegato');
+            console.log("Checkbox clicked"); // Log per vedere se l'evento click viene catturato
+
+            // Event listener per checkbox
+            checkbox.addEventListener('click', toggleFileUpload); 
+
+            // Event listener per controllo file upload
+            if (fileInput) {
+                fileInput.addEventListener('change', function(e) {
+                    var files = e.target.files;
+                    var fileSizeLimit = 10 * 1024 * 1024; // Limite di 10MB per file
+                    for (var i = 0; i < files.length; i++) {
+                        if (files[i].size > fileSizeLimit) {
+                            alert("Il file " + files[i].name + " supera i 10MB e non sarà caricato.");
+                            e.target.value = ''; // Resetta il campo se un file supera il limite
+                            break;
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</head>    
+    
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0%;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+    }
+
+    /* Contenitore che contiene i due blocchi */
+    .wrapper {
+        display: flex;
+        gap: 10%;
+        justify-content: space-between;
+        width: 90%;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .container-principale {
+
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 25px;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        width: 48%; /* Fanno in modo che occupino ciascuno metà della larghezza */
+        padding: 40px;
+        border-radius: 25px;
+    }
+
+    .text-container {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 25px;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        width: 78%; /* Fanno in modo che occupino ciascuno metà della larghezza */
+        padding: 40px;
+        border-radius: 25px;
+    }
+    h1 {
+        text-align: center;
+        color: rgb(0, 0, 0);
+        margin-bottom: 20px;
+        font-size: 26px;
+        margin-bottom: 8%;
+    }
+
+    h2 {
+        text-align: center;
+        color: rgb(0, 0, 0);
+        margin-bottom: 20px;
+        font-size: 26px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        color: #000000;
+        margin-left: 4%;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: none;
+        border-radius: 25px;
+        box-sizing: border-box;
+        font-size: 16px;
+        background-color: white;
+        color: black;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    textarea:focus {
+        outline: none;
+        background-color: lightgray;
+    }
+
+    button[type="submit"] {
+        background-color: #194672;
+        color: white;
+        padding: 16px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 16px;
+        width: 100%;
+        margin-top: 20px;
+        transition: 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #194572bb;
+        border-radius: 16px;
+    }
+
+    .container-principale textarea {
+        resize: none;
+        height: 100px;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+    }
+
+    .text-container {
+        padding: 30px;
+        font-size: 16px;
+        color: black;
+        max-height: 700px; /* Altezza massima per il contenitore di testo */
+        overflow-y: auto;  /* Abilita lo scrolling verticale se il contenuto è troppo lungo */
+    }
+
+    /* Responsività per schermi piccoli */
+    @media (max-width: 768px) {
+        .wrapper {
+            flex-direction: column;
+            gap: 20%;
+        }
+
+        .container-principale,
+        .text-container {
+            width: 100%;
+        }
+    }
+
+    p {
+        text-align: center;
+        margin-top: 20px;
+        color: rgb(78, 78, 78);
+        line-height: 30px;
+    }
+
+    .video-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: -1;
+    }
+
+    .video-background video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        z-index: -1;
+        transform: translate(-50%, -50%);
+        background-size: cover;
+    }
+
+
+    #file-upload {
+        display: none;
+    }
+</style>
+</head>
+<body>
+<div class="video-background">
+    <video autoplay muted loop playsinline>
+        <source src="images/sfondo.mp4" type="video/mp4">
+        Il tuo browser non supporta i video HTML5.
+    </video>
+</div>
+
+<div class="wrapper">
+    <!-- Sinistra: Container per il form -->
+    <div class="container-principale">
+        <h1>Inserisci i tuoi dati</h1>
+        <form action="/invia-consulenza" method="POST">
+            <div>
+                <label for="Nome">Nome:</label>
+                <input type="text" id="input-Nome" name="Nome" required>
+            </div>
+            <div>
+                <label for="Cognome">Cognome:</label>
+                <input type="text" id="input-Cognome" name="Cognome" required>
+            </div>
+            <div>
+                <label for="Email">Email:</label>
+                <input type="email" id="input-Email" name="Email" required>
+            </div>
+            <div>
+                <label for="Telefono">Telefono:</label>
+                <input type="text" id="input-Telefono" name="Telefono">
+            </div>
+            <div>
+                <label for="Richiesta">Richiesta:</label>
+                <textarea id="input-Richiesta" name="Richiesta" required></textarea>
+            </div>
+
+
+            <!-- Checkbox allegato e bottone submit -->
+            <div>
+                <label for="checkbox-allegato">
+                    <input type="checkbox" id="checkbox-allegato" onclick="toggleFileUpload()"> Hai bisogno di caricare un allegato?
+
+                </label>
+            </div>
+
+            <div id="file-upload">
+                <label for="Allegato">Allega un file</label>
+                <input type="file" id="input-Allegato" name="Allegato[]" multiple>
+
+            </div>
+
+            <button type="submit">Invia</button>
+        </form>
+    </div>
+
+    <!-- Destra: Container per il testo non modificabile -->
+    <div class="text-container">
+        <h2>Informazioni</h2>
+        <p>Benvenuti nella nostra pagina di Consulenza Generale, dove il vostro benessere e la risoluzione dei vostri problemi quotidiani sono la nostra priorità assoluta. Il nostro servizio è pensato per offrire supporto su una vasta gamma di tematiche, aiutandovi ad affrontare con serenità qualsiasi tipo di difficoltà che possa sorgere nella vostra vita di tutti i giorni. Che si tratti di un consiglio pratico, di un problema personale o professionale, siamo qui per ascoltarvi e trovare insieme la soluzione migliore.
+
+            La nostra forza sta nella cura e nell’attenzione che dedichiamo ad ogni singolo cliente. Crediamo fermamente che ogni situazione meriti un approccio unico e personalizzato, con l’obiettivo di garantire una consulenza mirata, efficace e, soprattutto, umana. Il nostro team di esperti è altamente qualificato per affrontare situazioni di varia natura, con empatia e professionalità.
+            
+            Attualmente, operiamo a Bologna, dove si trova la nostra sede centrale, ma il nostro impegno nei vostri confronti è totale. Per richiedere la nostra assistenza, vi invitiamo a compilare il modulo che trovate alla vostra sinistra: vi ricontatteremo nel più breve tempo possibile per una consulenza diretta e personalizzata. In alternativa, potete inviare un messaggio su WhatsApp semplicemente cliccando sul pulsante verde: saremo felici di rispondervi e organizzare un appuntamento telefonico o in presenza a seconda delle vostre esigenze.
+            
+            Affidatevi a noi per un supporto che va oltre la semplice consulenza, mettendo voi e i vostri bisogni al centro di ogni nostro intervento.</p>
+        
+    </div>
+</div>
+
+</body>
+
+</html>

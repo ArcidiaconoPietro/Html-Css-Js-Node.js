@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulenza</title>
+</head>
+<body>
+    <div id="Consulenza-Controller">
+        <!-- Qui verrà caricato il contenuto mobile o desktop -->
+    </div>
+
+    <script>
+        // Funzione per rilevare la dimensione dello schermo
+        function loadRegistrationPage() {
+            const width = window.innerWidth;
+
+            // Se la larghezza dello schermo è inferiore a una certa soglia, carica la versione mobile
+            const page = width <= 768 ? 'MobileConsulenza' : 'DesktopConsulenza';
+
+            // Effettua una richiesta per ottenere la versione corretta della pagina
+            fetch(`/${page}`)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('Consulenza-Controller').innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Errore durante il caricamento della pagina:', error);
+                });
+        }
+
+        // Carica la pagina corretta all'avvio
+        loadRegistrationPage();
+
+        // Ricarica la pagina quando la finestra viene ridimensionata
+        window.onresize = loadRegistrationPage;
+    </script>
+</body>
+</html>

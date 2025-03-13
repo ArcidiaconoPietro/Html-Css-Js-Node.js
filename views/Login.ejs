@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Artavi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #f0f0f0;
+            position: relative;
+        }
+
+        /* Video di sfondo */
+        #background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .Container_Principale {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            max-width: 400px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 10px;
+            z-index: 1;
+            position: relative;
+        }
+
+        h1 {
+            text-align: center;
+            color: rgb(0, 0, 0);
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-top: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: rgb(0, 0, 0);
+        }
+
+        input[type="text"],
+        input[type="password"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+            background-color: white;
+            color: black;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        textarea:focus {
+            outline: none;
+            background-color: lightgray;
+        }
+
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .toggle-password {
+            position: absolute;
+            left: 350px;
+            top: 58%;
+            transform: translateY(-50%);
+            background-color: transparent;
+            border: none;
+            color: #2727274f;
+            cursor: pointer;
+        }
+
+        .fa-eye, .fa-eye-slash {
+            font-size: 18px;
+        }
+
+        input[type="submit"] {
+            background-color: #194672;
+            color: white;
+            padding: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-bottom: 2vh;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #194572bb;
+        }
+
+        p {
+            text-align: left;
+            margin-top: 0px;
+            color: rgb(0, 0, 0);
+        }
+
+        p a {
+            color: #194672;
+            text-decoration: none;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+
+        .forgot-password {
+            text-align: left;
+            margin-top: 0px;
+        }
+
+        .forgot-password a {
+            color: #194672;
+            text-decoration: none;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            display: none;
+            background-color: #cf6679;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .image-container {
+            position: absolute;
+            top: 2%;
+            right: -30%;
+            width: auto;
+            height: 110%;
+            z-index: 2;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('form').submit(function(event) {
+                event.preventDefault(); // Previeni il comportamento di default del submit
+
+                var formData = $(this).serialize(); // Serializza i dati del form
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Login',
+                    data: formData,
+                    success: function(response) {
+                        // Se il login è avvenuto con successo, reindirizza alla pagina principale
+                        window.location.href = '/';
+                    },
+                    error: function(xhr, status, error) {
+                        if (xhr.status === 404) {
+                            $('.error-message').text('Email non esistente');
+                        } else if (xhr.status === 401) {
+                            $('.error-message').text('Password errata');
+                        } else {
+                            $('.error-message').text('Si è verificato un problema durante il login.');
+                        }
+                        $('.error-message').show();
+                    }
+                });
+            });
+
+            // Funzionalità per mostrare/nascondere la password
+            $('.toggle-password').click(function() {
+                let passwordField = $('#Password');
+                let type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+                passwordField.attr('type', type);
+                $(this).find('i').toggleClass('fa-eye fa-eye-slash');
+            });
+        });
+    </script>
+</head>
+<body>
+    <!-- Video di sfondo -->
+    <video id="background-video" autoplay loop muted>
+        <source src="images/sfondo.mp4" type="video/mp4">
+        Il tuo browser non supporta il tag video.
+    </video>
+
+    <!-- Container del form di login -->
+    <div class="Container_Principale">
+        <h1>Bentornato</h1>
+        <form action="/Login" method="post">
+            <div>
+                <label for="Email">Email:</label>
+                <input type="text" id="Email" name="Email" required>
+            </div>
+            <div class="password-container">
+                <label for="Password">Password:</label>
+                <input type="password" id="Password" name="Password" required>
+                <button type="button" class="toggle-password"><i class="fas fa-eye"></i></button>
+            </div>
+            <div class="forgot-password">
+                <p><a href="/Password_Dimenticata">Password dimenticata?</a></p>
+            </div>
+            <div>
+                <input type="submit" value="Login" id="ButtonLogin">
+            </div>
+        </form>
+        <div class="error-message"></div>
+        <div>
+            <p>Non sei registrato? <a href="Register.html">Registrati</a></p>
+        </div>
+
+        <!-- Container per l'immagine con rapporto 9/16 -->
+        <div class="image-container">
+            <img src="images/Login_omino.png" alt="Immagine">
+        </div>
+    </div>
+</body>
+</html>

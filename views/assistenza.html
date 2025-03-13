@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    html,
+    body {
+        margin: 0;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .selected {
+        background-color: lightblue;
+    }
+</style>
+
+<body>
+    <div class="form">
+        <h1>choose</h1>
+        <button id="button1" onclick="handleClick(this, 'button_invia')">scelta 1</button>
+        <button id="button2" onclick="handleClick(this, 'button_invia')">scelta 2</button>
+        <button id="button3" onclick="handleClick(this, 'button_invia')">scelta 3</button>
+        <button id="button_invia" disabled>INVIA</button>
+    </div>
+    <div class="form">
+        <h1 id="title">cazzone</h1>
+        <button id="button4" onclick="handleClick(this, 'button_invia1')">scelta 1</button>
+        <button id="button5" onclick="handleClick(this, 'button_invia1')">scelta 2</button>
+        <button id="button6" onclick="handleClick(this, 'button_invia1')">scelta 3</button>
+        <button id="button_invia1" disabled onclick="disappear(this,'title')">INVIA</button>
+    </div>
+
+</body>
+<script>
+    var idSelected;
+    function handleClick(button, inviaButtonId) {
+        const inviaButton = document.getElementById(inviaButtonId);
+
+        const parentForm = button.parentElement;
+        const buttons = parentForm.querySelectorAll('button:not([id^="button_invia"])');
+        buttons.forEach(btn => btn.classList.remove('selected'));
+
+        button.classList.add('selected');
+
+        inviaButton.disabled = false;
+
+    }
+    function disappear(button, title) {
+
+        const parentForm = button.parentElement;
+        const buttons = parentForm.querySelectorAll('button:not([id^="button_invia1"])');
+
+        buttons.forEach(btn => {
+            if (btn.classList.contains('selected')) {
+                console.log("Selected button:", btn.textContent);
+            }
+        });
+        const buttonsTot = parentForm.querySelectorAll('button');
+        buttonsTot.forEach(btn => {
+            btn.style.display="none";
+        });
+        const titolo= document.getElementById(title);
+        titolo.style.display="none";
+    }
+
+
+</script>
+
+</html>

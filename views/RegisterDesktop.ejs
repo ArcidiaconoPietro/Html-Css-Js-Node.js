@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrati - Artavi</title>
+    <style>
+        /* Stili CSS come nel tuo codice originale */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow-x: hidden;
+        }
+        .Container_Principale {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1150px;
+            width: 100%;
+            padding: 70px;
+            margin-right: 30%;
+        }
+        .left-section, .right-section {
+            width: 45%;
+        }
+        h1 {
+            text-align: center;
+            color: rgb(0, 0, 0);
+            margin-bottom: 5px;
+            font-size: 26px;
+        }
+        form {
+            margin-top: 30px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #000000;
+            margin-left: 3%;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 25px;
+            box-sizing: border-box;
+            font-size: 16px;
+            background-color: white;
+            color: black;
+        }
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        input[type="email"]:focus,
+        textarea:focus {
+            outline: none;
+            background-color: lightgray;
+        }
+        input[type="submit"] {
+            background-color: #194672;
+            color: white;
+            padding: 16px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 20px;
+            transition: 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #194572bb;
+            border-radius: 16px;
+        }
+        p {
+            text-align: center;
+            margin-top: 20px;
+            color: rgb(78, 78, 78);
+        }
+        p a {
+            color: #194672;
+            text-decoration: none;
+        }
+        p a:hover {
+            text-decoration: underline;
+        }
+        .error-banner {
+            background-color: #cf6679;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 25px;
+            margin-top: 20px;
+            
+            display: none; /* Nascosto inizialmente */
+        }
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .video-background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            background-size: cover;
+        }
+        .right-section p {
+            color: rgb(78, 78, 78);
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .right-section img {
+            max-width: 100%;
+            border-radius: 25px;
+        }
+        .whatsapp-button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .whatsapp-button-container p {
+            color: rgb(0, 0, 0);
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+        .whatsapp-button-container a {
+            display: inline-block;
+            background-color: #1e8f48;
+            padding: 10px 20px;
+            color: white;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: 0.3s ease;
+        }
+        .whatsapp-button-container a:hover {
+            background-color: #1da850d7;
+            border-radius: 16px;
+        }
+    </style>
+
+</head>
+<script>
+  document.getElementById('registerForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Previene l'invio del form e il ricaricamento della pagina
+
+    const form = event.target;
+    const formData = new FormData(form);
+    console.log(formData)
+    // Invia i dati del form al server tramite fetch
+    fetch('/register', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => {
+        // Se la risposta non è OK (status diverso da 200-299), lancia un errore
+        if (!response.ok) {
+            return response.json().then(data => {
+                throw new Error(data.error || 'Errore del server.');
+            });
+        }
+        return response.json(); // Altrimenti, continua con il JSON della risposta
+    })
+    .then(data => {
+        // Se la registrazione è riuscita, redirigi alla pagina di congratulazioni
+        window.location.href = '/Verifica_Email';
+    })
+    .catch(error => {
+        // Mostra l'errore nella pagina
+        const errorBanner = document.getElementById('errorBanner');
+        const errorMessage = document.getElementById('errorMessage');
+        errorBanner.style.display = 'block'; // Mostra il banner di errore
+        errorMessage.textContent = error.message; // Visualizza il messaggio di errore
+    });
+});
+
+
+function validateEmail() {
+    const emailField = document.getElementById('Email');
+    const errorMessage = document.getElementById('errorMessage');
+    const errorBanner = document.getElementById('errorBanner');
+
+    const email = emailField.value;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+        errorBanner.style.display = 'block';
+        errorMessage.textContent = 'Formato email non valido.';
+        emailField.style.borderColor = 'red';
+    } else {
+        errorBanner.style.display = 'none';
+        emailField.style.borderColor = 'initial';
+    }
+}
+
+    
+
+</script>
+<body>
+    <div class="video-background">
+        <video autoplay muted loop playsinline>
+            <source src="images/sfondo.mp4" type="video/mp4">
+            Il tuo browser non supporta i video HTML5.
+        </video>
+    </div>
+    <div class="Container_Principale">
+        <div class="left-section">
+            <h1>Benvenuto su Artavi!</h1>
+            <form id="registerForm" action="/register" method="POST">
+                <div>
+                    <label for="Nome">Nome:</label>
+                    <input type="text" id="Nome" name="Nome" required>
+                </div>
+                <div>
+                    <label for="Email">Email:</label>
+                    <input type="email" id="Email" name="Email" required>
+                </div>
+                <div>
+                    <label for="Password">Password:</label>
+                    <input type="password" id="Password" name="Password" required>
+                </div>
+                <div>
+                    <input type="submit" value="Registrati">
+                </div>
+            </form>
+            
+            
+            <!-- Banner di errore nascosto -->
+            <div class="error-banner" id="errorBanner" style="display:none;">
+                <span id="errorMessage"></span>
+            </div>
+            
+             
+            <div>
+                <p>Ti sei già registrato? <a href="/ControllerLogin">Accedi</a></p>
+            </div>
+            <div class="whatsapp-button-container">
+                <p>Hai bisogno di essere contattato urgentemente? Scrivici subito!</p>
+                <a href="https://wa.me/393791113763" target="_blank">Chatta su WhatsApp</a>
+            </div>
+        </div>
+
+        <div class="right-section">
+            <img src="images/Register_omino.png" alt="Registration Image">
+        </div>
+    </div>
+</body>
+</html>

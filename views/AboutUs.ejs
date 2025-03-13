@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informazioni - Artavi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f0f0f0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .container {
+            margin-top: 2%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 80%;
+            z-index: 1;
+        }
+
+        .text-section {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            max-width: 60%;
+            width: 100%;
+            padding: 40px;
+        }
+
+        .text-section h1 {
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .text-section p {
+            font-size: 18px;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .text-section .button {
+            display: block;
+            width: fit-content;
+            padding: 15px 50px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #194672; 
+            border: none;
+            border-radius: 25px;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+            margin: 20px auto 0; /* Centra il pulsante e aggiunge spazio sopra */
+            transition: 0.3s ease;
+        }
+
+        .text-section .button:hover {
+            background-color: #194572bb;
+            border-radius: 16px;
+        }
+
+        /* Stili per la tendina */
+        .scroll-section {
+            position: fixed;
+            bottom: -29%; /* La tendina parte completamente fuori dalla vista */
+            width: 100%;
+            height: 39%;
+            background: rgba(255, 255, 255, 0.274);
+            border-radius: 25px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
+            padding: 20px  0 0 0;
+            z-index: 2;
+            transition: bottom 0.5s ease-out; /* Transizione fluida */
+        }
+
+        .scroll-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .scroll-header h2 {
+            margin: 0;
+            font-size: 22px;
+            color: #333;
+        }
+
+        .arrow-down {
+            display: block;
+            margin-top: 10px;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        /* Ruota la freccia di 180 gradi */
+        .arrow-rotated {
+            transform: rotate(180deg);
+        }
+
+        .arrow-down:hover {
+            transform: scale(1.1);
+            transform: rotate(180deg);
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+        }
+
+        .image-box {
+            text-align: center;
+            width: 20%;
+            position: relative; /* Necessario per il posizionamento del sovrapposizione */
+            overflow: hidden; /* Nasconde la parte dell'immagine che esce dalla box */
+        }
+
+        .image-box img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            transition: transform 0.3s ease, filter 0.3s ease; /* Transizioni per gli effetti hover */
+        }
+
+        .image-box img:hover {
+            transform: scale(0.95); /* Riduce l'immagine */
+            border-radius: 25px;
+        }
+
+        .image-box p {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        footer {
+            background-color: #194572;
+            /* Colore uguale all'header */
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+            z-index: 2;
+            margin-top: 70%;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 10px 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-container p {
+            margin: 30px 0;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .footer-container img {
+            width: 40px;
+            height: auto;
+        }
+
+        .footer-container i {
+            color: white;
+            font-size: 24px;
+        }
+
+        .footer-container p {
+            margin-left: 15px;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Video di sfondo -->
+    <video id="background-video" autoplay loop muted>
+        <source src="images/sfondo.mp4" type="video/mp4">
+        Il tuo browser non supporta il tag video.
+    </video>
+
+    <!-- Sezione principale -->
+    <div class="container">
+        <div class="text-section">
+            <h1>Chi siamo, Qual è il nostro scopo?</h1>
+            <p>
+                Il nostro gruppo è formato da tre ragazzi con una grande passione: aiutare chi ha bisogno di una guida per affrontare le sfide quotidiane o professionali. Con la nostra attività a Bologna, offriamo servizi di consulenza generale, pensati per chiunque abbia bisogno di un supporto pratico e concreto per iniziare un nuovo progetto o risolvere problematiche specifiche.
+            </p>
+
+            <p> 
+                La nostra missione è semplice: fornire assistenza a chi non ha esperienza o si sente bloccato, aiutando a chiarire i dubbi, definire gli obiettivi e trovare le soluzioni migliori. Che tu stia avviando un'attività, gestendo un problema personale o professionale, siamo qui per offrirti una mano.
+            </p>
+
+            <p> 
+                Con un approccio dinamico e personalizzato, ci impegniamo a capire le tue esigenze e a proporti le risposte più adatte. Ci piace pensare a noi come un punto di riferimento affidabile, in grado di accompagnarti passo dopo passo nel raggiungimento dei tuoi traguardi.
+            </p>
+
+            <p> 
+                Se sei alla ricerca di supporto, siamo pronti a metterci al tuo fianco per affrontare insieme ogni sfida.
+            </p>
+            <a href="Login.html" class="button">Iniziamo!</a>
+        </div>
+    </div>
+
+    <!-- Tendina con immagini e testo -->
+    <div class="scroll-section">
+        <!-- Header con testo e freccia -->
+        <div class="scroll-header">
+            <h2>ALCUNI DEI NOSTRI SERVIZI</h2>
+            <img src="images/freccia_aboutus.png" alt="Freccia giù" class="arrow-down" id="arrow-down">
+        </div>
+
+        <!-- Contenitore immagini in riga -->
+        <div class="image-container">
+            <div class="image-box">
+                <img src="images/info_aboutus.jpg" alt="Immagine 1">
+                <p>Consulenza generale</p>
+            </div>
+            <div class="image-box">
+                <img src="images/info_aboutus.jpg" alt="Immagine 2">
+                <p>Testo immagine 2</p>
+            </div>
+            <div class="image-box">
+                <img src="images/info_aboutus.jpg" alt="Immagine 3">
+                <p>Testo immagine 3</p>
+            </div>
+            <div class="image-box">
+                <img src="images/info_aboutus.jpg" alt="Immagine 4">
+                <p>Testo immagine 4</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container" style="display: flex; justify-content: center; align-items: center; gap: 15px;">
+            <!-- Logo piccolino -->
+            <img src="images/logo_bianco.png" alt="Logo" style="width: 30px; height: auto;">
+
+            <!-- Icone social -->
+            <a href="#" target="_blank"><i class="fab fa-facebook" style="color: white; font-size: 24px;"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-instagram" style="color: white; font-size: 24px;"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-whatsapp" style="color: white; font-size: 24px;"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-linkedin" style="color: white; font-size: 24px;"></i></a>
+
+            <!-- Copyright -->
+            <p style="margin-left: 15px;">&copy; 2024 Artavi Consulting. Tutti i diritti riservati.</p>
+        </div>
+        <div class="footer-container">
+            <p><a href="#">Privacy Policy</a> | <a href="#">Termini e condizioni</a></p>
+        </div>
+    </footer>
+
+    <script>
+        let scrollPosition = -29; // Posizione iniziale della tendina (fuori schermo)
+        let isOpen = false; // Stato della tendina (chiusa)
+
+        document.getElementById('arrow-down').addEventListener('click', function() {
+            // Se la tendina è chiusa, aprila
+            if (!isOpen) {
+                document.querySelector('.scroll-section').style.bottom = '0%';
+                document.getElementById('arrow-down').classList.add('arrow-rotated'); // Ruota la freccia
+            } 
+            // Se la tendina è aperta, chiudila
+            else {
+                document.querySelector('.scroll-section').style.bottom = '-29%';
+                document.getElementById('arrow-down').classList.remove('arrow-rotated'); // Torna alla posizione originale
+            }
+            isOpen = !isOpen; // Alterna lo stato
+        });
+    </script>
+</body>
+</html>

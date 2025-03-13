@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Congratulazioni - Operazione Riuscita</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .Container_Principale {
+            max-width: 400px;
+            width: 100%;
+            padding: 40px;
+            margin: 5%;
+        }
+        h1 {
+            text-align: center;
+            color: rgb(0, 0, 0);
+            margin-bottom: 20px;
+            font-size: 26px;
+            margin-bottom: 8%;
+        }
+        p {
+            text-align: center;
+            color: rgb(0, 0, 0);
+            font-size: 18px;
+            line-height: 1.5;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        a.button {
+            background-color: #194672;
+            color: white;
+            padding: 16px;
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 16px;
+            display: inline-block;
+            margin-top: 20px;
+            transition: 0.3s ease;
+        }
+        a.button:hover {
+            background-color: #194572bb;
+            border-radius: 16px;
+        }
+        /* Stile per il video di sfondo */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1; /* Posiziona il video dietro al contenuto */
+        }
+
+        .video-background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            background-size: cover;
+        }
+
+        /* Assicurati che il contenuto sia visibile sopra il video */
+        .Container_Principale {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Overlay opzionale per migliorare la leggibilità del testo */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Modifica l'opacità se necessario */
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="video-background">
+        <video autoplay muted loop playsinline>
+            <source src="images/sfondo.mp4" type="video/mp4">
+            Il tuo browser non supporta i video HTML5.
+        </video>
+    </div>
+    <div class="Container_Principale">
+        <h1>Congratulazioni!</h1>
+        <p>La tua richiesta è stata <b>registrata</b>!<br> Grazie per aver utilizzato il nostro servizio. </p>
+        <p>La ricontatteremo il <b>prima possibile</b> per fornirle ulteriori informazioni e assisterla nelle prossime fasi. </p>
+    
+        <div class="button-container">
+            <a href="/" class="button">Torna alla Home</a>
+        </div>
+    </div>
+</body>
+</html>

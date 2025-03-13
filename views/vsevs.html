@@ -1,0 +1,77 @@
+<style>
+    /* Stile del banner */
+    #review-banner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 65%;
+      height: 10%;
+      background-color: white;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      z-index: 1000;
+      font-family: Arial, sans-serif;
+    }
+  
+    /* Stile del punteggio e delle stelle */
+    #review-banner .rating {
+      display: flex;
+      align-items: center;
+    }
+  
+    #review-banner .rating span {
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-right: 5px;
+    }
+  
+    /* Stile delle stelle */
+    #review-banner .stars {
+      font-size: 1.5em;
+      color: #fbc02d; /* Colore delle stelle */
+    }
+  
+    /* Stile del testo */
+    #review-banner .review-text {
+      font-size: 1em;
+      margin-left: 10px;
+    }
+  
+    /* Stile del logo di Google */
+    #review-banner .google-logo {
+      height: 30px;
+      margin-right: 10px;
+    }
+  
+    /* Stile del pulsante di chiusura */
+    #review-banner .close-btn {
+      background-color: transparent;
+      border: none;
+      font-size: 1.5em;
+      cursor: pointer;
+      padding: 5px;
+    }
+  </style>
+  
+  <!-- Banner delle recensioni -->
+  <div id="review-banner">
+    <div class="rating">
+      <span>4.4</span>
+      <div class="stars">
+        ★★★★☆
+      </div>
+      <div class="review-text">
+        Poliambulatorio Odontoiatrico Sorriso<br>
+        Controlla le <strong>35 recensioni</strong> su 
+        <img class="google-logo" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
+      </div>
+      <button class="close-btn" onclick="document.getElementById('review-banner').style.display='none'">×</button>
+    </div>
+    </div>
+
+  
+  
